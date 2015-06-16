@@ -2,12 +2,12 @@
 <html>
 
 <head>
-    <meta charset=utf-8 />
-    <title>Loading CSV into Markers</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
-    <script src='https://api.tiles.mapbox.com/mapbox.js/v1.6.1/mapbox.js'></script>
-    <script src='../leaflet-mapmatch.js'></script>
-    <link href='https://api.tiles.mapbox.com/mapbox.js/v1.6.1/mapbox.css' rel='stylesheet' />
+    <meta charset="utf-8" />
+    <title>Matching geojsons to streets</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <script src="https://api.tiles.mapbox.com/mapbox.js/v1.6.1/mapbox.js"></script>
+    <script src="../leaflet-mapmatch.js"></script>
+    <link href="https://api.tiles.mapbox.com/mapbox.js/v1.6.1/mapbox.css" rel="stylesheet" />
     <style>
         body {
             margin: 0;
@@ -24,21 +24,28 @@
 </head>
 
 <body>
-    <div id='map'></div>
+    <div id="map"></div>
     <script>
-        var map = L.mapbox.map('map', 'examples.map-9ijuk24y')
+        // Provide your access token
+        L.mapbox.accessToken = 'pk.eyJ1IjoicGxhbmVtYWQiLCJhIjoiemdYSVVLRSJ9.g3lbg_eN0kztmsfIPxa9MQ';
+
+        var map = L.mapbox.map('map', 'planemad.ld94clg1')
             .setView([38, -102.0], 5);
 
-        function log(_) {
-            if (typeof console == 'object') console.log(_);
-        }
-
-
-        mapmatch.geojson('a.geojson')
-            .on('ready', function () {
-                log('geojson loaded');
-            })
+        // Create an empty featureLayer
+        var featureLayer = L.mapbox.featureLayer()
+            .loadURL('a.geojson')
             .addTo(map);
+
+
+        console.log(featureLayer.getGeoJSON());
+
+//        mapmatch.geojson('a.geojson')
+//            .on('ready', function () {
+//                log('geojson loaded');
+//            })
+//            .addTo(map);
+        
     </script>
 </body>
 

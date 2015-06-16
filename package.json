@@ -1,24 +1,22 @@
 {
-    "name": "leaflet-mapmatch",
-    "description": "A plugin to align geometries to streetmap data",
-    "main": "index.js",
-    "scripts": {
-        "test": "zuul --local -- test/test.js",
-        "test-remote": "zuul -- test/test.js",
-        "test-headless": "zuul --phantom test/test.js",
-        "build": "browserify -s omnivore index.js > leaflet-mapmatch.js && uglifyjs leaflet-mapmatch.js -c -m > leaflet-mapmatch.min.js"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git@github.com:mapbox/leaflet-mapmatch.git"
-    },
-    "browserify": {
-        "transform": [
+  "name": "leaflet-mapmatch",
+  "description": "A plugin to align geometries to streetmap data",
+  "main": "index.js",
+  "scripts": {
+    "test": "zuul --local -- test/test.js",
+    "build": "browserify -s mapmatch index.js > leaflet-mapmatch.js && uglifyjs leaflet-mapmatch.js -c -m > leaflet-mapmatch.min.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:mapbox/leaflet-mapmatch.git"
+  },
+  "browserify": {
+    "transform": [
       "brfs",
       "hintify"
     ]
-    },
-    "keywords": [
+  },
+  "keywords": [
     "leaflet",
     "mapmatch",
     "align",
@@ -26,16 +24,22 @@
     "osm",
     "resample"
   ],
-    "author": "Arun Ganesh",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/mapbox/leaflet-mapmatch/issues"
-    },
-    "homepage": "https://github.com/mapbox/leaflet-mapmatch",
-    "devDependencies": {
-        "browserify": "7.0.2",
-        "tape": "2.4.2",
-        "uglify-js": "2.4.16",
-        "mapbox.js": "1.6.4"
-    }
+  "author": "Arun Ganesh",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mapbox/leaflet-mapmatch/issues"
+  },
+  "homepage": "https://github.com/mapbox/leaflet-mapmatch",
+  "devDependencies": {
+    "browserify": "7.0.2",
+    "tape": "2.4.2",
+    "uglify-js": "2.4.16",
+    "mapbox.js": "1.6.4"
+  },
+  "dependencies": {
+    "brfs": "^1.4.0",
+    "geojson-tidy": "^0.1.4",
+    "hintify": "^0.1.0",
+    "zuul": "^3.0.0"
+  }
 }
