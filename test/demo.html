@@ -2,12 +2,11 @@
 <html>
 
 <head>
-    <meta charset="utf-8" />
-    <title>Matching geojsons to streets</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <script src="https://api.tiles.mapbox.com/mapbox.js/v1.6.1/mapbox.js"></script>
-    <script src="../leaflet-mapmatch.js"></script>
-    <link href="https://api.tiles.mapbox.com/mapbox.js/v1.6.1/mapbox.css" rel="stylesheet" />
+    <meta charset=utf-8 />
+    <title>GeoJSON marker from GitHub</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.css' rel='stylesheet' />
     <style>
         body {
             margin: 0;
@@ -25,11 +24,14 @@
 
 <body>
     <div id="map"></div>
+
+    <!-- jQuery is required for this example. -->
+    <script src='https://code.jquery.com/jquery-1.11.0.min.js'></script>
     <script>
         // Provide your access token
         L.mapbox.accessToken = 'pk.eyJ1IjoicGxhbmVtYWQiLCJhIjoiemdYSVVLRSJ9.g3lbg_eN0kztmsfIPxa9MQ';
 
-        var map = L.mapbox.map('map', 'planemad.ld94clg1')
+        var map = L.mapbox.map('map', 'mapbox.streets')
             .setView([38, -102.0], 5);
 
         // Create an empty featureLayer
@@ -40,12 +42,36 @@
 
         console.log(featureLayer.getGeoJSON());
 
-//        mapmatch.geojson('a.geojson')
-//            .on('ready', function () {
-//                log('geojson loaded');
-//            })
-//            .addTo(map);
-        
+        //        mapmatch.geojson('a.geojson')
+        //            .on('ready', function () {
+        //                log('geojson loaded');
+        //            })
+        //            .addTo(map);
+
+        var url = 'https://api.github.com/repos/mapbox/mapbox.js/contents/test/manual/example.geojson';
+
+        function load() {
+            // Fetch just the contents of a .geojson file from GitHub by passing
+            // `application/vnd.github.v3.raw` to the Accept header
+            // As with any other AJAX request, this technique is subject to the Same Origin Policy:
+            // http://en.wikipedia.org/wiki/Same_origin_policy the server delivering the request should support CORS.
+            $.ajax({
+                headers: {
+                    'Accept': 'application/vnd.github.v3.raw'
+                },
+                xhrFields: {
+                    withCredentials: false
+                },
+                dataType: 'json',
+                url: url,
+                success: function (geojson) {
+                    // On success add fetched data to the map.
+                    L.mapbox.featureLayer(geojson).addTo(map);
+                }
+            });
+        }
+
+        $(load);
     </script>
 </body>
 
