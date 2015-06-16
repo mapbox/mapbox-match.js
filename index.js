@@ -1,10 +1,12 @@
-var tidy = require('geojson-tidy');
+var xhr = require('corslite'),
+    tidy = require('geojson-tidy');
 
 module.exports.mapmatch = mapmatch;
 
 
 // Public function
 
-function mapmatch(){
-    console.log("Hey");
+function mapmatch(geojson) {
+    console.log("Hello there");
+    console.log(geojson);
 }

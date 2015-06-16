@@ -38,6 +38,7 @@
   },
   "dependencies": {
     "brfs": "^1.4.0",
+    "corslite": "0.0.7",
     "geojson-tidy": "^0.1.4",
     "hintify": "^0.1.0",
     "zuul": "^3.0.0"
