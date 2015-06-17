@@ -55,8 +55,8 @@
                     featureLayer.setGeoJSON(geojson);
                     map.fitBounds(featureLayer.getBounds());
                     
-                    // Try mapmatch
-                    mapmatch(featureLayer.getGeoJSON());
+                    // Try mapmatch and create a new FeatureLayer
+                    mapmatch.mapmatch(geojson);
                 }
             });
         }

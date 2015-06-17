@@ -8,9 +8,35 @@ module.exports.mapmatch = mapmatch;
 // Public function
 
 function mapmatch(geojson) {
-    console.log("Hello there");
-    console.log(geojson);
+
+    //    var layer = featureLayer || L.geoJson();
+
+    // Create a tidy geojson
+    var tidyGeojson = tidy.tidy(geojson, {
+        "minimumDistance": 20
+    });
+
+    var mapMatchAPI = "https://api-directions-johan-matching.tilestream.net/v4/directions/matching/mapbox.driving.json";
+    var xhrUrl = mapMatchAPI + "?" + L.mapbox.accessToken;
+
+    console.log(tidyGeojson);
+
+    //    for (var i = 0; i < tidyGeojson.features.length; i++) {
+    //
+    //        xhr(xhrUrl, function (err, response) {
+    //            if (err) return layer.fire('error', {
+    //                error: err
+    //            });
+    //            addData(layer, JSON.parse(response.responseText));
+    //            layer.fire('ready');
+    //        });
+    //
+    //    }
+
 }
+
+// Test map matching
+// curl -X POST -d @test/cross-country.json "https://api-directions-johan-matching.tilestream.net/v4/directions/matching/mapbox.driving.json?access_token=pk.eyJ1IjoicGxhbmVtYWQiLCJhIjoiemdYSVVLRSJ9.g3lbg_eN0kztmsfIPxa9MQ" --header "Content-Type:application/json"
 },{"corslite":2,"geojson-tidy":3}],2:[function(require,module,exports){
 function corslite(url, callback, cors) {
     var sent = false;
@@ -111,33 +137,34 @@ var haversine = require('haversine');
 
 module.exports.tidy = tidy;
 
-
 // Public function
 
 function tidy(geojson, options) {
 
+    options = options || {};
+
     // Set the minimum distance in metres and time interval in seconds between successive coordinates
     var filter = {
-            minimumDistance: options && options.minimumDistance || 10,
-            minimumTime: options && options.minimumTime || 5,
-            maximumPoints: options && options.maximumPoints || 100
-        };
+        minimumDistance: options.minimumDistance || 10,
+        minimumTime: options.minimumTime || 5,
+        maximumPoints: options.maximumPoints || 100
+    };
 
     // Create the tidy output feature collection
     var tidyOutput = {
-            "type": "FeatureCollection",
-            "features": []
+        "type": "FeatureCollection",
+        "features": []
+    };
+    var emptyFeature = {
+        "type": "Feature",
+        "properties": {
+            "coordTimes": []
         },
-        emptyFeature = {
-            "type": "Feature",
-            "properties": {
-                "coordTimes": []
-            },
-            "geometry": {
-                "type": "LineString",
-                "coordinates": []
-            }
-        };
+        "geometry": {
+            "type": "LineString",
+            "coordinates": []
+        }
+    };
 
     // Helper to pass an object by value instead of reference
     function clone(obj) {
@@ -146,16 +173,15 @@ function tidy(geojson, options) {
 
     //Loop through input features
 
-    for ( var featureIndex = 0; featureIndex < geojson.features.length; featureIndex++) {
+    for (var featureIndex = 0; featureIndex < geojson.features.length; featureIndex++) {
 
-        // Skip non LineString features
-        if ( geojson.features[featureIndex].geometry.type != 'LineString'){
+        // Skip non LineString features in the collections
+        if (geojson.features[featureIndex].geometry.type != 'LineString') {
             continue;
         }
 
-        var simplifiedGeojson = geojson.features[featureIndex],
-            lineString = simplifiedGeojson.geometry.coordinates,
-            timeStamp = simplifiedGeojson.properties.coordTimes;
+        var lineString = geojson.features[featureIndex].geometry.coordinates,
+            timeStamp = geojson.features[featureIndex].properties.coordTimes;
 
         tidyOutput.features.push(clone(emptyFeature));
 
@@ -174,13 +200,13 @@ function tidy(geojson, options) {
 
             // Calculate distance between successive points in metres
             var point1 = {
-                    latitude: lineString[i][1],
-                    longitude: lineString[i][0]
-                },
-                point2 = {
-                    latitude: lineString[i + 1][1],
-                    longitude: lineString[i + 1][0]
-                };
+                latitude: lineString[i][1],
+                longitude: lineString[i][0]
+            };
+            var point2 = {
+                latitude: lineString[i + 1][1],
+                longitude: lineString[i + 1][0]
+            };
 
             var Dx = haversine(point1, point2, {
                 unit: 'km'
@@ -193,9 +219,11 @@ function tidy(geojson, options) {
 
             // Calculate sampling time diference between successive points in seconds
             if (timeStamp) {
-                var time1 = new Date(timeStamp[i]),
-                    time2 = new Date(timeStamp[i + 1]),
-                    Tx = (time2 - time1) / 1000;
+
+                var time1 = new Date(timeStamp[i]);
+                var time2 = new Date(timeStamp[i + 1]);
+
+                var Tx = (time2 - time1) / 1000;
 
                 // Skip point if sampled to close to each other
                 if (Tx < filter.minimumTime) {
@@ -222,7 +250,6 @@ function tidy(geojson, options) {
     }
 
     // DEBUG
-    // Stats
     //    console.log(JSON.stringify(tidyOutput));
 
     // Your tidy geojson is ready!
