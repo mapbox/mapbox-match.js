@@ -18,13 +18,14 @@ function mapmatch(geojson, map) {
 
     // Hit mapmatching API for every feature
     var mapMatchAPI = "https://api-directions-johan-matching.tilestream.net/v4/directions/matching/mapbox.driving.json";
-    var xhrUrl = mapMatchAPI + "?" + L.mapbox.accessToken;
+    var xhrUrl = mapMatchAPI + "?access_token=" + L.mapbox.accessToken;
 
     function matchFeature(feature) {
 
         xhrOptions = {
-            json: "",
+            body: feature,
             uri: xhrUrl,
+            method: "POST",
             headers: {
                 "Content-Type": "application/json"
             }
