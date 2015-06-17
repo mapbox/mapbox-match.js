@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<html>
 
 <head>
     <meta charset="utf-8" />
-    <title>GeoJSON marker from GitHub</title>
+    <title>Map match GeoJSONs from GitHub</title>
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
     <script src="https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.js"></script>
     <link href="https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.css" rel="stylesheet" />
@@ -56,7 +55,7 @@
                     map.fitBounds(featureLayer.getBounds());
                     
                     // Try mapmatch and create a new FeatureLayer
-                    mapmatch.mapmatch(geojson);
+                    mapmatch.mapmatch(geojson, map);
                 }
             });
         }
