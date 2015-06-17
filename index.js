@@ -11,7 +11,7 @@ function mapmatch(geojson, map) {
 
     // First tidy the geojson
     var featureCollection = JSON.parse(tidy.tidy(geojson, {
-            "minimumDistance": 20
+            "minimumDistance": 10
         }));
 
     var featureLayer = L.mapbox.featureLayer().addTo(map);
