@@ -1,15 +1,17 @@
 var xhr = require('xhr'),
-    tidy = require('geojson-tidy');
+    tidy = require('geojson-tidy'),
+    queue = require('queue-async');
 
 module.exports.mapmatch = mapmatch;
 
 
 // Public function
 
-function mapmatch(geojson, map) {
+function mapmatch(geojson, callback) {
 
+    var q = queue();
 
-    // First tidy the geojson
+    // First tidy the geojson using defaults
     var featureCollection = JSON.parse(tidy.tidy(geojson, {
         "minimumDistance": 10,
         "minimumTime": 5
@@ -23,7 +25,7 @@ function mapmatch(geojson, map) {
     function matchFeature(feature, cb) {
 
         xhrOptions = {
-            body: "",
+            body: JSON.stringify(feature),
             uri: xhrUrl,
             method: "POST",
             headers: {
@@ -32,14 +34,8 @@ function mapmatch(geojson, map) {
         };
 
         xhr(xhrOptions, function (err, response, body) {
-            if (err) {
-                return console.log(err);
-            }
 
-            // Style the matched geometry
-            var layer = ;
-
-            callback(layer);
+            cb(err, JSON.parse(body));
 
         });
 
@@ -47,9 +43,14 @@ function mapmatch(geojson, map) {
 
     // Match every input feature
     for (var i = 0; i < featureCollection.features.length; i++) {
-        matchFeature(featureCollection.features[i]);
+        q.defer(matchFeature, featureCollection.features[i]);
     }
 
+    q.awaitAll(function (error, results) {
+
+        callback(error, results);
+
+    });
 
 }
 
