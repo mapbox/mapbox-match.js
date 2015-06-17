@@ -55,9 +55,9 @@
                     map.fitBounds(featureLayer.getBounds());
 
                     // Try mapmatch the geojson
-                    mapmatch.mapmatch(geojson, function (error, data) {
+                    mapmatch.mapmatch(geojson, function (error, featureLayer) {
 
-                        data.addTo(map);
+                        featureLayer.addTo(map);
 
                     });
                 }

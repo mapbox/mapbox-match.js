@@ -12,7 +12,7 @@ function mapmatch(geojson, callback) {
     var q = queue();
 
     // First tidy the geojson using defaults
-    var featureCollection = JSON.parse(tidy.tidy(geojson, {
+    var inputGeometries = JSON.parse(tidy.tidy(geojson, {
         "minimumDistance": 10,
         "minimumTime": 5
     }));
@@ -42,13 +42,28 @@ function mapmatch(geojson, callback) {
     }
 
     // Match every input feature
-    for (var i = 0; i < featureCollection.features.length; i++) {
-        q.defer(matchFeature, featureCollection.features[i]);
+
+    //    console.log("input", JSON.stringify(inputGeometries));
+
+    for (var i = 0; i < inputGeometries.features.length; i++) {
+        q.defer(matchFeature, inputGeometries.features[i]);
+
     }
+
 
     q.awaitAll(function (error, results) {
 
-        callback(error, results);
+        var matchedGeometeries = [];
+
+        console.log("results", results);
+        // Merge feature collections array into first one
+        for (var i = 0; i < results.length; i++) {
+            matchedGeometeries = matchedGeometeries.concat(results[i].features);
+        }
+
+        var featureLayer = L.mapbox.featureLayer(matchedGeometeries);
+        
+        callback(error, featureLayer);
 
     });
 
