@@ -6,13 +6,14 @@ module.exports.mapmatch = mapmatch;
 
 // Public function
 
-function mapmatch(geojson, map) {
+function mapmatch(FeatureCollection, map) {
 
 
     // First tidy the geojson
-    var matchedGeojson = JSON.parse(tidy.tidy(geojson, {
-        "minimumDistance": 20
-    }));
+    var featureCollection = JSON.parse(tidy.tidy(FeatureCollection, {
+            "minimumDistance": 20
+        })),
+        matchedFeatureCollection;
 
     var featureLayer = L.mapbox.featureLayer().addTo(map);
 
@@ -23,7 +24,7 @@ function mapmatch(geojson, map) {
     function matchFeature(feature) {
 
         xhrOptions = {
-            body: feature,
+            body: JSON.stringify(feature),
             uri: xhrUrl,
             method: "POST",
             headers: {
@@ -36,17 +37,32 @@ function mapmatch(geojson, map) {
                 console.log(err);
             }
 
+            L.geoJson(JSON.parse(body), {
+                style: {
+                    "weight": 20,
+                    "color": "#172AEF",
+                    "opacity": 0.6
+                },
+                onEachFeature: function (feature, layer) {
+                    layer.bindPopup(body, {
+                        minWidth: 600,
+                        maxHeight: 600
+                    });
+                }
+            }).addTo(map);
+
             console.log(body);
 
         });
 
     }
 
-    for (var i = 0; i < matchedGeojson.features.length; i++) {
+    for (var i = 0; i < featureCollection.features.length; i++) {
 
-        matchFeature(matchedGeojson.features[i]);
+        matchedFeatureCollection = matchFeature(featureCollection.features[i]);
 
     }
+
 
 }
 
