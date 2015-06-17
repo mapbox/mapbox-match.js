@@ -11,19 +11,19 @@ function mapmatch(geojson, map) {
 
     // First tidy the geojson
     var featureCollection = JSON.parse(tidy.tidy(geojson, {
-            "minimumDistance": 20
-        }));
+        "minimumDistance": 10,
+        "minimumTime": 5
+    }));
 
-    var featureLayer = L.mapbox.featureLayer().addTo(map);
 
     // Hit mapmatching API for every feature
     var mapMatchAPI = "https://api-directions-johan-matching.tilestream.net/v4/directions/matching/mapbox.driving.json";
     var xhrUrl = mapMatchAPI + "?access_token=" + L.mapbox.accessToken;
 
-    function matchFeature(feature) {
+    function matchFeature(feature, cb) {
 
         xhrOptions = {
-            body: JSON.stringify(feature),
+            body: "",
             uri: xhrUrl,
             method: "POST",
             headers: {
@@ -33,25 +33,13 @@ function mapmatch(geojson, map) {
 
         xhr(xhrOptions, function (err, response, body) {
             if (err) {
-                console.log(err);
+                return console.log(err);
             }
 
             // Style the matched geometry
-            L.geoJson(JSON.parse(body), {
-                style: {
-                    "weight": 20,
-                    "color": "#172AEF",
-                    "opacity": 0.6
-                },
-                onEachFeature: function (feature, layer) {
-                    layer.bindPopup(body, {
-                        minWidth: 600,
-                        maxHeight: 600
-                    });
-                }
-            }).addTo(map);
+            var layer = ;
 
-            console.log(body);
+            callback(layer);
 
         });
 
