@@ -6,14 +6,13 @@ module.exports.mapmatch = mapmatch;
 
 // Public function
 
-function mapmatch(FeatureCollection, map) {
+function mapmatch(geojson, map) {
 
 
     // First tidy the geojson
-    var featureCollection = JSON.parse(tidy.tidy(FeatureCollection, {
+    var featureCollection = JSON.parse(tidy.tidy(geojson, {
             "minimumDistance": 20
-        })),
-        matchedFeatureCollection;
+        }));
 
     var featureLayer = L.mapbox.featureLayer().addTo(map);
 
@@ -37,6 +36,7 @@ function mapmatch(FeatureCollection, map) {
                 console.log(err);
             }
 
+            // Style the matched geometry
             L.geoJson(JSON.parse(body), {
                 style: {
                     "weight": 20,
@@ -57,10 +57,9 @@ function mapmatch(FeatureCollection, map) {
 
     }
 
+    // Match every input feature
     for (var i = 0; i < featureCollection.features.length; i++) {
-
-        matchedFeatureCollection = matchFeature(featureCollection.features[i]);
-
+        matchFeature(featureCollection.features[i]);
     }
 
 
