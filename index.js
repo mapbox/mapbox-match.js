@@ -1,26 +1,28 @@
 var xhr = require('xhr'),
-    tidy = require('geojson-tidy');
+    tidy = require('geojson-tidy'),
+    queue = require('queue-async');
 
 module.exports.mapmatch = mapmatch;
 
 
 // Public function
 
-function mapmatch(geojson, map) {
+function mapmatch(geojson, callback) {
+
+    var q = queue();
 
 
-    // First tidy the geojson
-    var featureCollection = JSON.parse(tidy.tidy(geojson, {
-            "minimumDistance": 10
-        }));
-
-    var featureLayer = L.mapbox.featureLayer().addTo(map);
+    // First tidy the geojson using defaults
+    var inputGeometries = JSON.parse(tidy.tidy(geojson, {
+        "minimumDistance": 10,
+        "minimumTime": 5
+    }));
 
     // Hit mapmatching API for every feature
     var mapMatchAPI = "https://api-directions-johan-matching.tilestream.net/v4/directions/matching/mapbox.driving.json";
     var xhrUrl = mapMatchAPI + "?access_token=" + L.mapbox.accessToken;
 
-    function matchFeature(feature) {
+    function matchFeature(feature, cb) {
 
         xhrOptions = {
             body: JSON.stringify(feature),
@@ -32,36 +34,38 @@ function mapmatch(geojson, map) {
         };
 
         xhr(xhrOptions, function (err, response, body) {
-            if (err) {
-                console.log(err);
-            }
 
-            // Style the matched geometry
-            L.geoJson(JSON.parse(body), {
-                style: {
-                    "weight": 20,
-                    "color": "#172AEF",
-                    "opacity": 0.6
-                },
-                onEachFeature: function (feature, layer) {
-                    layer.bindPopup(body, {
-                        minWidth: 600,
-                        maxHeight: 600
-                    });
-                }
-            }).addTo(map);
-
-            console.log(body);
+            cb(err, JSON.parse(body));
 
         });
 
     }
 
     // Match every input feature
-    for (var i = 0; i < featureCollection.features.length; i++) {
-        matchFeature(featureCollection.features[i]);
+
+    //    console.log("input", JSON.stringify(inputGeometries));
+
+    for (var i = 0; i < inputGeometries.features.length; i++) {
+        q.defer(matchFeature, inputGeometries.features[i]);
+
     }
 
+
+    q.awaitAll(function (error, results) {
+
+        var matchedGeometeries = [];
+
+        console.log("results", results);
+        // Merge feature collections array into first one
+        for (var i = 0; i < results.length; i++) {
+            matchedGeometeries = matchedGeometeries.concat(results[i].features);
+        }
+
+        var featureLayer = L.mapbox.featureLayer(matchedGeometeries);
+        
+        callback(error, featureLayer);
+
+    });
 
 }
 

@@ -53,9 +53,13 @@
                     // On success add fetched data to the map.
                     featureLayer.setGeoJSON(geojson);
                     map.fitBounds(featureLayer.getBounds());
-                    
-                    // Try mapmatch and create a new FeatureLayer
-                    mapmatch.mapmatch(geojson, map);
+
+                    // Try mapmatch the geojson
+                    mapmatch.mapmatch(geojson, function (error, featureLayer) {
+
+                        featureLayer.addTo(map);
+
+                    });
                 }
             });
         }
