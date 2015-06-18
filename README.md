@@ -32,10 +32,10 @@ L.mapmatch('a.geojson').addTo(map);
  - :`car` (default) for matching to motorable roads
  - :`foot` for matching to pedestrian streets and footpaths
 - `mapmatchAPI` : Custom API endpoint for mapmatching
-- `precision` : Integer indicating the precision of the input geometries in metres (default=5)
+- `gpsPrecision` : Integer indicating the precision of the input geometries in metres (default=5)
 - `return` type of object to return after matching
  - :`layer` (default) returns a leaflet featureLayer
- - :`feature` returns a geojson feature collection object
+ - :`features` returns a geojson feature collection object
 
 ## Development
 

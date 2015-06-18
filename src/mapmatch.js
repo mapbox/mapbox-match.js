@@ -54,7 +54,7 @@ function mapmatch(geojson, options, callback) {
     // First tidy the input geojson to remove noisy points and match every feature using the API
 
     var inputGeometries = JSON.parse(tidy.tidy(geojson, {
-        "minimumDistance": options.precision || 10,
+        "minimumDistance": options.gpsPrecision || 10,
         "minimumTime": 5
     }));
 
@@ -69,9 +69,14 @@ function mapmatch(geojson, options, callback) {
         for (var i = 0; i < results.length; i++) {
             matchedGeometeries = matchedGeometeries.concat(results[i].features);
         }
-        var featureLayer = L.mapbox.featureLayer(matchedGeometeries);
 
-        callback(error, featureLayer);
+        // Return either features or layer
+        if (options.return == "features") {
+            callback(error, matchedGeometeries);
+        } else {
+            var featureLayer = L.mapbox.featureLayer(matchedGeometeries);
+            callback(error, featureLayer);
+        }
 
     });
 
