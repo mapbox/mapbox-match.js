@@ -5,7 +5,7 @@
   "version": "0.1.0",
   "scripts": {
     "test": "zuul --local -- test/test.js",
-    "build": "browserify -s mapmatch index.js > mapbox-mapmatch.js && uglifyjs mapbox-mapmatch.js -c -m > mapbox-mapmatch.min.js"
+    "build": "browserify -s mapmatch index.js > dist/mapbox-mapmatch.js && uglifyjs dist/mapbox-mapmatch.js -c -m > dist/mapbox-mapmatch.min.js"
   },
   "repository": {
     "type": "git",
