@@ -62,7 +62,9 @@
 
                     // Try mapmatch the geojson
                     L.mapbox.mapmatch(geojson, {
-                        mapmatchAPI: "https://api-directions-johan-matching.tilestream.net/matching/v4/mapbox.driving.json"
+                        profile: "car",
+                        precision: 20,
+                        output: "geometry"
                     }, function (error, matchedLayer) {
 
                         matchedLayer.addTo(map);

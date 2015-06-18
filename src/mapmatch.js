@@ -5,14 +5,16 @@ var xhr = require('xhr'),
     polyline = require('polyline'),
     queue = require('queue-async');
 
-
-// Public function
-
 function mapmatch(geojson, options, callback) {
 
+    options = options || {};
+
     // Configure mapmatching API and create an empty queue for storing the responses
-    var mapMatchAPI = "https://api-directions-johan-matching.tilestream.net/matching/v4/mapbox.driving.json";
-    var xhrUrl = mapMatchAPI + "?access_token=" + L.mapbox.accessToken + "&geometry=polyline";
+    var mapmatchAPI = options.mapmatchAPI || "https://api-directions-johan-matching.tilestream.net/matching/v4/mapbox.driving.json";
+    if (options.profile == "foot") {
+        mapmatchAPI = "https://api-directions-johan-walk-match.tilestream.net/matching/v4/mapbox.driving.json";
+    }
+    var xhrUrl = mapmatchAPI + "?access_token=" + L.mapbox.accessToken + "&geometry=polyline";
     var q = queue();
 
     function matchFeature(feature, cb) {
@@ -26,6 +28,7 @@ function mapmatch(geojson, options, callback) {
         };
 
         xhr(xhrOptions, function (err, response, body) {
+
             // Polyline decoder
             var geojson = JSON.parse(body);
             geojson.features = geojson.features.map(function (feature) {
@@ -34,7 +37,7 @@ function mapmatch(geojson, options, callback) {
                     "properties": feature.properties,
                     "geometry": {
                         "type": "LineString",
-                        // Invert latLon to lonLat because polyline thinks differently
+                        // Invert latLon to lonLat because polyline is left brained
                         "coordinates": polyline.decode(feature.geometry, 6).map(function (coords) {
                             return [coords[1], coords[0]];
                         })
@@ -42,7 +45,8 @@ function mapmatch(geojson, options, callback) {
                 };
                 return obj;
             });
-            console.log(JSON.stringify(geojson));
+
+            // Return matched geojson
             cb(err, geojson);
         });
     }
@@ -50,7 +54,7 @@ function mapmatch(geojson, options, callback) {
     // First tidy the input geojson to remove noisy points and match every feature using the API
 
     var inputGeometries = JSON.parse(tidy.tidy(geojson, {
-        "minimumDistance": 10,
+        "minimumDistance": options.precision || 10,
         "minimumTime": 5
     }));
 
