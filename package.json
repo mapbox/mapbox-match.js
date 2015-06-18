@@ -1,15 +1,15 @@
 {
-  "name": "leaflet-mapmatch",
+  "name": "mapbox-mapmatch",
   "description": "A plugin to align geometries to streetmap data",
   "main": "index.js",
   "version": "0.1.0",
   "scripts": {
     "test": "zuul --local -- test/test.js",
-    "build": "browserify -s mapmatch index.js > leaflet-mapmatch.js && uglifyjs leaflet-mapmatch.js -c -m > leaflet-mapmatch.min.js"
+    "build": "browserify -s mapmatch index.js > mapbox-mapmatch.js && uglifyjs mapbox-mapmatch.js -c -m > mapbox-mapmatch.min.js"
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:mapbox/leaflet-mapmatch.git"
+    "url": "git@github.com:mapbox/mapbox-mapmatch.git"
   },
   "browserify": {
     "transform": [
@@ -28,9 +28,9 @@
   "author": "Arun Ganesh",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/mapbox/leaflet-mapmatch/issues"
+    "url": "https://github.com/mapbox/mapbox-mapmatch/issues"
   },
-  "homepage": "https://github.com/mapbox/leaflet-mapmatch",
+  "homepage": "https://github.com/mapbox/mapbox-mapmatch",
   "devDependencies": {
     "browserify": "7.0.2",
     "tape": "2.4.2",

@@ -1,21 +1,21 @@
-[![Build Status](https://travis-ci.org/mapbox/leaflet-mapmatch.svg)](https://travis-ci.org/mapbox/leaflet-mapmatch)
+[![Build Status](https://travis-ci.org/mapbox/mapbox-mapmatch.svg)](https://travis-ci.org/mapbox/mapbox-mapmatch)
 
-# leaflet-mapmatch
+# mapbox-mapmatch
 
 [Leaflet](http://leafletjs.com/) plugin to match input geojson geometries to perfectly align with the openstreetmap streets. 
 
 
 ## Installation
 
-<!--use it easily with the [Mapbox Plugins CDN](http://mapbox.com/mapbox.js/plugins/#leaflet-mapmatch):
+<!--use it easily with the [Mapbox Plugins CDN](http://mapbox.com/mapbox.js/plugins/#mapbox-mapmatch):
 
 ```html
-<script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-mapmatch/v0.2.0/leaflet-mapmatch.min.js'></script>
+<script src='//api.tiles.mapbox.com/mapbox.js/plugins/mapbox-mapmatch/v0.2.0/mapbox-mapmatch.min.js'></script>
 ```
 
 -->
 
-Or download `leaflet-mapmatch.min.js` from this repository.
+Or download `mapbox-mapmatch.min.js` from this repository.
 
 ## example
 
@@ -113,18 +113,18 @@ after the call.
 This is a [browserify](http://browserify.org/) project:
 
 ```sh
-git clone git@github.com:mapbox/leaflet-mapmatch.git
+git clone git@github.com:mapbox/mapbox-mapmatch.git
 
-cd leaflet-mapmatch
+cd mapbox-mapmatch
 
 # to run tests
 npm install
 
-# to build leaflet-mapmatch.js
+# to build mapbox-mapmatch.js
 npm run build
 ```
 
-`leaflet-mapmatch.js` and `leaflet-mapmatch.min.js` are **built files** generated
+`mapbox-mapmatch.js` and `mapbox-mapmatch.min.js` are **built files** generated
 from `index.js` by `browserify`. If you find an issue, it either needs to be
-fixed in `index.js`, or in one of the libraries leaflet-mapmatch uses
+fixed in `index.js`, or in one of the libraries mapbox-mapmatch uses
 to parse formats.

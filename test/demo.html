@@ -6,7 +6,7 @@
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
     <script src="https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.js"></script>
     <link href="https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.css" rel="stylesheet" />
-    <script src="../leaflet-mapmatch.js"></script>
+    <script src="../mapbox-mapmatch.js"></script>
 
     <style>
         body {
@@ -35,7 +35,7 @@
         var map = L.mapbox.map('map', 'mapbox.streets');
         var featureLayer = L.mapbox.featureLayer().addTo(map);
 
-        var url = 'https://raw.githubusercontent.com/mapbox/leaflet-mapmatch/master/test/a.geojson';
+        var url = 'https://raw.githubusercontent.com/mapbox/mapbox-mapmatch/master/test/a.geojson';
 
         function load() {
             // Fetch just the contents of a .geojson file from GitHub
