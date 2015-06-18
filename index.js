@@ -43,20 +43,15 @@ function mapmatch(geojson, callback) {
 
     // Match every input feature
 
-    //    console.log("input", JSON.stringify(inputGeometries));
-
     for (var i = 0; i < inputGeometries.features.length; i++) {
         q.defer(matchFeature, inputGeometries.features[i]);
-
     }
-
 
     q.awaitAll(function (error, results) {
 
         var matchedGeometeries = [];
 
-        console.log("results", results);
-        // Merge feature collections array into first one
+        // Merge feature collections array
         for (var i = 0; i < results.length; i++) {
             matchedGeometeries = matchedGeometeries.concat(results[i].features);
         }
@@ -68,9 +63,3 @@ function mapmatch(geojson, callback) {
     });
 
 }
-
-
-
-
-// Test map matching
-// curl -X POST -d @test/cross-country.json "https://api-directions-johan-matching.tilestream.net/v4/directions/matching/mapbox.driving.json?access_token=pk.eyJ1IjoicGxhbmVtYWQiLCJhIjoiemdYSVVLRSJ9.g3lbg_eN0kztmsfIPxa9MQ" --header "Content-Type:application/json"

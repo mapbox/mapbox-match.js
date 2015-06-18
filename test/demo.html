@@ -51,13 +51,26 @@
                 url: url,
                 success: function (geojson) {
                     // On success add fetched data to the map.
-                    featureLayer.setGeoJSON(geojson);
+                    featureLayer.setGeoJSON(geojson).setStyle({
+                        weight: 2,
+                        color: 'red',
+                        dashArray: '4,4',
+                        opacity: 0.5
+                    });
+                    
                     map.fitBounds(featureLayer.getBounds());
 
                     // Try mapmatch the geojson
                     mapmatch.mapmatch(geojson, function (error, featureLayer) {
 
                         featureLayer.addTo(map);
+
+                        featureLayer.setStyle({
+                            weight: 2,
+                            color: 'black',
+                            dashArray: '',
+                            opacity: 1
+                        });
 
                     });
                 }
