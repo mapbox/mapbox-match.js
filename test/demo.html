@@ -50,22 +50,24 @@
                 dataType: 'json',
                 url: url,
                 success: function (geojson) {
-                    // On success add fetched data to the map.
+                    // On success add original path to the map
                     featureLayer.setGeoJSON(geojson).setStyle({
                         weight: 2,
                         color: 'red',
                         dashArray: '4,4',
                         opacity: 0.5
                     });
-                    
+
                     map.fitBounds(featureLayer.getBounds());
 
                     // Try mapmatch the geojson
-                    L.mapbox.mapmatch(geojson, function (error, featureLayer) {
+                    L.mapbox.mapmatch(geojson, {
+                        mapmatchAPI: "https://api-directions-johan-matching.tilestream.net/matching/v4/mapbox.driving.json"
+                    }, function (error, matchedLayer) {
 
-                        featureLayer.addTo(map);
+                        matchedLayer.addTo(map);
 
-                        featureLayer.setStyle({
+                        matchedLayer.setStyle({
                             weight: 2,
                             color: 'black',
                             dashArray: '',
