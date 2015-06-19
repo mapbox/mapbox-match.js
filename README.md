@@ -35,7 +35,7 @@ L.mapmatch('a.geojson').addTo(map);
 - `gpsPrecision` : Integer indicating the precision of the input geometries in metres (default=5)
 - `return` type of object to return after matching
  - :`layer` (default) returns a leaflet featureLayer
- - :`features` returns a geojson feature collection object
+ - :`feature` returns a geojson feature collection object
 
 ## Development
 

@@ -6,7 +6,7 @@
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
     <script src="https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.js"></script>
     <link href="https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.css" rel="stylesheet" />
-    <script src="../dist/mapbox.mapmatch.js"></script>
+    <script src="../dist/mapbox.map-matching.js"></script>
 
     <style>
         body {
@@ -52,9 +52,9 @@
                 success: function (geojson) {
 
                     // Mapmatch the geojson with default options
-                    L.mapbox.mapmatch(geojson, {}, function (error, matchedLayer) {
-                        matchedLayer.addTo(map).bringToBack();
-                        matchedLayer.setStyle({
+                    L.mapbox.mapmatching(geojson, {}, function (error, layer) {
+                        layer.addTo(map).bringToBack();
+                        layer.setStyle({
                             color: '#b73800',
                             weight: 15,
                             opacity: 0.3
@@ -62,33 +62,30 @@
                     });
 
                     // Try foot profile matching
-                    L.mapbox.mapmatch(geojson, {
-                        gpsPrecision: 1,
+                    L.mapbox.mapmatching(geojson, {
+                        gpsPrecision: 20,
                         profile: "foot"
-                    }, function (error, matchedLayer) {
-                        matchedLayer.addTo(map);
-                        matchedLayer.setStyle({
+                    }, function (error, layer) {
+                        layer.addTo(map);
+                        layer.setStyle({
                             color: '#ff0000',
                             weight: 2,
                             opacity: 0.9
                         });
 
                     });
-                    
-                    // Return high confidence features
-//                    L.mapbox.mapmatch(geojson, {
-//                        gpsPrecision: 1,
-//                        profile: "foot",
-//                        return: "feature"
-//                    }, function (error, matchedLayer) {
-//                        matchedLayer.addTo(map);
-//                        matchedLayer.setStyle({
-//                            color: '#003460',
-//                            weight: 2,
-//                            opacity: 0.9
+
+                    // Draw high confidence matched features
+                    L.mapbox.mapmatching(geojson, {
+                        profile: "foot",
+                        output: "feature"
+                    }, function (error, feature) {
+                        console.log(feature);
+//                        var good_features = $(feature).filter(function (f) {
+//                            return f.properties.confidence > 0.8;
 //                        });
-//
-//                    });
+                        
+                    });
 
                     // Compare with the original
                     featureLayer.setGeoJSON(geojson).setStyle({

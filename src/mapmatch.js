@@ -61,6 +61,7 @@ function mapmatch(geojson, options, callback) {
     for (var i = 0; i < inputGeometries.features.length; i++) {
         q.defer(matchFeature, inputGeometries.features[i]);
     }
+    console.log("hey");
 
     // After all the features are matched merge them into a single feature collection
 
@@ -70,8 +71,8 @@ function mapmatch(geojson, options, callback) {
             matchedGeometeries = matchedGeometeries.concat(results[i].features);
         }
 
-        // Return either features or layer
-        if (options.return == "features") {
+        // Return either features or layer        
+        if (options.output == "feature") {
             callback(error, matchedGeometeries);
         } else {
             var featureLayer = L.mapbox.featureLayer(matchedGeometeries);
