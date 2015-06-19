@@ -2,8 +2,12 @@
 
 # mapbox-map-matching.js
 
-[Mapbox.js](https://github.com/mapbox/mapbox.js) plugin to match input geojson geometries to perfectly align with the openstreetmap streets using the Mapbox Map Matching API.
+[Mapbox.js](https://github.com/mapbox/mapbox.js) plugin to match input geojson geometries to Openstreetmap streets using the [Mapbox map-matching API]().
 
+![untitled](https://cloud.githubusercontent.com/assets/126868/8263771/04e9d83a-16ac-11e5-943f-884e70686989.gif)
+
+Input geometry(cyan) matched using a car and foot(dashed) profile.
+![screenshot 2015-06-19 17 57 24](https://cloud.githubusercontent.com/assets/126868/8263826/ad755d58-16ac-11e5-966e-f7a9be97ff28.png)
 
 ## Installation
 Inlcude mapbox-map-matching.js after [Mapbox.js](https://github.com/mapbox/mapbox.js) in your html. Download the js files from the `dist` directory..
