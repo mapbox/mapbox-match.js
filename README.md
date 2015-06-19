@@ -6,15 +6,15 @@
 
 
 ## Installation
-Inlcude mapbox-map-matching.js after [Mapbox.js](https://github.com/mapbox/mapbox.js) in your html.
+Inlcude mapbox-map-matching.js after [Mapbox.js](https://github.com/mapbox/mapbox.js) in your html. Download the js files from the `dist` directory..
 
-From [Mapbox Plugins CDN](http://mapbox.com/mapbox.js/plugins/#mapbox-mapmatch):
+<!--
+Or use the version on the [Mapbox Plugins CDN](http://mapbox.com/mapbox.js/plugins/#mapbox-mapmatch):
 
 ```html
-<script src='//api.tiles.mapbox.com/mapbox.js/plugins/mapbox.map-matching.js/v0.2.0/mapbox.map-matching.min.js'></script>
+<script src='//api.tiles.mapbox.com/mapbox.js/plugins/mapbox.map-matching.js/v0.0.0/mapbox.map-matching.min.js'></script>
 ```
-
-Or download the js files from the `dist` directory.
+-->
 
 ## example
 

@@ -53,11 +53,11 @@ function mapmatch(geojson, options, callback) {
 
     // First tidy the input geojson to remove noisy points and match every feature using the API
 
-    var inputGeometries = JSON.parse(tidy.tidy(geojson, {
+    var inputGeometries = tidy.tidy(geojson, {
         "minimumDistance": options.gpsPrecision || 10,
         "minimumTime": 5,
         "maximumPoints": 100
-    }));
+    });
 
     for (var i = 0; i < inputGeometries.features.length; i++) {
         q.defer(matchFeature, inputGeometries.features[i]);
