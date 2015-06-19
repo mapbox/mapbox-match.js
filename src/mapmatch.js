@@ -30,9 +30,9 @@ function mapmatch(geojson, options, callback) {
         xhr(xhrOptions, function (err, response, body) {
 
             // Polyline decoder
-            var geojson = JSON.parse(body);
-            geojson.features = geojson.features.map(function (feature) {
-                var obj = {
+            var matchedFeature = JSON.parse(body);
+            matchedFeature.features = matchedFeature.features.map(function (feature) {
+                var decodedFeature = {
                     "type": "Feature",
                     "properties": feature.properties,
                     "geometry": {
@@ -43,11 +43,11 @@ function mapmatch(geojson, options, callback) {
                         })
                     }
                 };
-                return obj;
+                return decodedFeature;
             });
 
             // Return matched geojson
-            cb(err, geojson);
+            cb(err, matchedFeature);
         });
     }
 
@@ -55,7 +55,8 @@ function mapmatch(geojson, options, callback) {
 
     var inputGeometries = JSON.parse(tidy.tidy(geojson, {
         "minimumDistance": options.gpsPrecision || 10,
-        "minimumTime": 5
+        "minimumTime": 5,
+        "maximumPoints": 30
     }));
 
     for (var i = 0; i < inputGeometries.features.length; i++) {
@@ -68,7 +69,7 @@ function mapmatch(geojson, options, callback) {
     q.awaitAll(function (error, results) {
         var mergedResults = results[0];
         for (var i = 1; i < results.length; i++) {
-            mergedResults.features.push(results[i]);
+            mergedResults.features.push(results[i].features[0]);
         }
         
         // Return the features or leaflet layer        

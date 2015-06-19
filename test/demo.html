@@ -81,10 +81,13 @@
                         output: "feature"
                     }, function (error, feature) {
                         console.log(feature);
-                        var good_features = $(feature).filter(function (f) {
-                            return f.properties.confidence > 0.8;
-                        });
-                        
+                        for (var i = 0; i < feature.length; i++) {
+                            
+                            var good_features = $(feature).filter(function (f) {
+                                return f.properties.confidence > 0.8;
+                            });
+                        }
+
                     });
 
                     // Compare with the original
