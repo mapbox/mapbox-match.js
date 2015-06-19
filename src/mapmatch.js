@@ -61,21 +61,21 @@ function mapmatch(geojson, options, callback) {
     for (var i = 0; i < inputGeometries.features.length; i++) {
         q.defer(matchFeature, inputGeometries.features[i]);
     }
-    console.log("hey");
+
 
     // After all the features are matched merge them into a single feature collection
 
     q.awaitAll(function (error, results) {
-        var matchedGeometeries = [];
-        for (var i = 0; i < results.length; i++) {
-            matchedGeometeries = matchedGeometeries.concat(results[i].features);
+        var mergedResults = results[0];
+        for (var i = 1; i < results.length; i++) {
+            mergedResults.features.push(results[i]);
         }
-
-        // Return either features or layer        
+        
+        // Return the features or leaflet layer        
         if (options.output == "feature") {
-            callback(error, matchedGeometeries);
+            callback(error, mergedResults);
         } else {
-            var featureLayer = L.mapbox.featureLayer(matchedGeometeries);
+            var featureLayer = L.mapbox.featureLayer(mergedResults);
             callback(error, featureLayer);
         }
 
