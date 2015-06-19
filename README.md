@@ -31,6 +31,10 @@ L.mapbox.mapmatching(geojson, options, function (error, layer) {
 
 ## API
 
+### `L.mapbox.mapmatching(geojson, options?, callback)`
+
+Given a geojson object, returns a leaflet feature layer with the matched geometries. Since an asynchronous request is made for matching, you need to specify a callback function that runs when there is a successful response.
+
 ### options
 - `profile` to be used for mapmatching
  - :`car` (default) for matching to motorable roads
@@ -56,3 +60,9 @@ npm run build
 from `index.js` by `browserify`. If you find an issue, it either needs to be
 fixed in `index.js`, or in one of the libraries mapbox-mapmatch uses
 to parse formats.
+
+##Algorithm
+1. Read an input geojson FeatureCollection
+2. Tidy the geojson using [geojson-tidy](https://github.com/mapbox/geojson-tidy)
+3. Match every feature using the [Mapbox map-matching API]()
+4. Return a leaflet [featureLayer](https://www.mapbox.com/mapbox.js/api/v2.1.9/l-mapbox-featurelayer/) with the matched features or just a geojson object
