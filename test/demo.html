@@ -52,49 +52,52 @@
                 success: function (geojson) {
 
                     // Mapmatch the geojson with default options
-                    L.mapbox.mapmatching(geojson, {}, function (error, layer) {
+                    L.mapbox.mapmatching(geojson, function (error, layer) {
                         layer.addTo(map).bringToBack();
                         layer.setStyle({
-                            color: '#b73800',
-                            weight: 15,
-                            opacity: 0.3
+                            color: '#9a0202',
+                            weight: 4,
+                            opacity: 0.8
                         });
                     });
 
                     // Try foot profile matching
                     L.mapbox.mapmatching(geojson, {
-                        gpsPrecision: 20,
                         profile: "foot"
                     }, function (error, layer) {
                         layer.addTo(map);
                         layer.setStyle({
                             color: '#ff0000',
                             weight: 2,
-                            opacity: 0.9
+                            opacity: 0.9,
+                            dashArray: '2,4'
                         });
 
                     });
 
-                    // Draw high confidence matched features
+                    // Highlight high confidence matched features
                     L.mapbox.mapmatching(geojson, {
                         profile: "foot",
-                        output: "feature"
-                    }, function (error, feature) {
-                        console.log(feature);
-                        for (var i = 0; i < feature.length; i++) {
-                            
-                            var good_features = $(feature).filter(function (f) {
-                                return f.properties.confidence > 0.8;
-                            });
+                        output: "geojson"
+                    }, function (error, geojson) {
+                        for (var i = 0; i < geojson.features.length; i++) {
+                            if (geojson.features[i].properties.confidence > 0.8) {
+                                var layer = L.mapbox.featureLayer(geojson.features[i]).addTo(map);
+                                layer.setStyle({
+                                    color: '#01e001',
+                                    weight: 10,
+                                    opacity: 0.3,
+                                    dashArray: '2,4'
+                                });
+                            }
                         }
 
                     });
 
                     // Compare with the original
                     featureLayer.setGeoJSON(geojson).setStyle({
-                        weight: 2,
-                        color: 'black',
-                        dashArray: '4,4',
+                        weight: 1,
+                        color: '#00ffff'
                     });
                     map.fitBounds(featureLayer.getBounds());
 

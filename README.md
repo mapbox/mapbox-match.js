@@ -19,10 +19,14 @@ Or download the js files from the `dist` directory.
 ## example
 
 ```js
-var map = L.mapbox.map('map', 'mapbox.streets')
-    .setView([38, -102.0], 5);
-
-L.mapmatch('a.geojson').addTo(map);
+L.mapbox.mapmatching(geojson, options, function (error, layer) {
+    layer.addTo(map);
+    layer.setStyle({
+        color: '#9a0202',
+        weight: 4,
+        opacity: 0.8
+    });
+});
 ```
 
 ## API
@@ -35,7 +39,7 @@ L.mapmatch('a.geojson').addTo(map);
 - `gpsPrecision` : Integer indicating the precision of the input geometries in metres (default=5)
 - `return` type of object to return after matching
  - :`layer` (default) returns a leaflet featureLayer
- - :`feature` returns a geojson feature collection object
+ - :`geojson` returns a geojson feature collection
 
 ## Development
 
@@ -43,13 +47,8 @@ This is a [browserify](http://browserify.org/) project:
 
 ```sh
 git clone git@github.com:mapbox/mapbox-map-matching.js.git
-
 cd mapbox-map-matching.js
-
-# to run tests
 npm install
-
-# to build mapbox-map-matching.js
 npm run build
 ```
 

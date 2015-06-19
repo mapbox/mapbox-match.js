@@ -56,7 +56,7 @@ function mapmatch(geojson, options, callback) {
     var inputGeometries = JSON.parse(tidy.tidy(geojson, {
         "minimumDistance": options.gpsPrecision || 10,
         "minimumTime": 5,
-        "maximumPoints": 30
+        "maximumPoints": 100
     }));
 
     for (var i = 0; i < inputGeometries.features.length; i++) {
@@ -73,7 +73,7 @@ function mapmatch(geojson, options, callback) {
         }
         
         // Return the features or leaflet layer        
-        if (options.output == "feature") {
+        if (options.output == "geojson") {
             callback(error, mergedResults);
         } else {
             var featureLayer = L.mapbox.featureLayer(mergedResults);
@@ -85,5 +85,9 @@ function mapmatch(geojson, options, callback) {
 }
 
 module.exports = function (feature, options, callback) {
+    if( !callback){
+        callback = options;
+        options = {};
+    }
     return new mapmatch(feature, options, callback);
 };
