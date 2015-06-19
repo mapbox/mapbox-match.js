@@ -55,29 +55,45 @@
                     L.mapbox.mapmatch(geojson, {}, function (error, matchedLayer) {
                         matchedLayer.addTo(map).bringToBack();
                         matchedLayer.setStyle({
-                            weight: 10,
-                            opacity: 0.9
+                            color: '#b73800',
+                            weight: 15,
+                            opacity: 0.3
                         });
                     });
 
                     // Try foot profile matching
                     L.mapbox.mapmatch(geojson, {
                         gpsPrecision: 1,
-                        profile: "foot",
+                        profile: "foot"
                     }, function (error, matchedLayer) {
                         matchedLayer.addTo(map);
                         matchedLayer.setStyle({
-                            color: '#003460',
+                            color: '#ff0000',
                             weight: 2,
                             opacity: 0.9
                         });
 
                     });
+                    
+                    // Return high confidence features
+//                    L.mapbox.mapmatch(geojson, {
+//                        gpsPrecision: 1,
+//                        profile: "foot",
+//                        return: "feature"
+//                    }, function (error, matchedLayer) {
+//                        matchedLayer.addTo(map);
+//                        matchedLayer.setStyle({
+//                            color: '#003460',
+//                            weight: 2,
+//                            opacity: 0.9
+//                        });
+//
+//                    });
 
                     // Compare with the original
                     featureLayer.setGeoJSON(geojson).setStyle({
                         weight: 2,
-                        color: '#e30000',
+                        color: 'black',
                         dashArray: '4,4',
                     });
                     map.fitBounds(featureLayer.getBounds());
