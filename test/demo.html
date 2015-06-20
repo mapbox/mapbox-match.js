@@ -76,6 +76,14 @@
                     });
 
                     // Highlight high confidence matched features
+                    var highlightStyle = {
+                        color: '#2262CC',
+                        weight: 3,
+                        opacity: 0.6,
+                        fillOpacity: 0.65,
+                        fillColor: '#2262CC'
+                    };
+
                     L.mapbox.mapmatching(geojson, {
                         profile: "foot",
                         output: "geojson"
