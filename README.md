@@ -2,13 +2,14 @@
 
 # mapbox-map-matching.js
 
-[Mapbox.js](https://github.com/mapbox/mapbox.js) plugin to match input geojson geometries to Openstreetmap streets using the [Mapbox map-matching API]().
+Have your gps tracks and geojson data perfectly align with OpenStreetMap streets using this [Mapbox.js](https://github.com/mapbox/mapbox.js) plugin by querying the [Mapbox Map Matching API]().
 
-GPS tracks(cyan) matched using a car and foot profile(dashed).
-![untitled](https://cloud.githubusercontent.com/assets/126868/8263771/04e9d83a-16ac-11e5-943f-884e70686989.gif)![screenshot 2015-06-19 17 57 24](https://cloud.githubusercontent.com/assets/126868/8263826/ad755d58-16ac-11e5-966e-f7a9be97ff28.png)
+Sample GPS tracks(cyan) matched using a car and foot profile(dashed).
+![untitled](https://cloud.githubusercontent.com/assets/126868/8263771/04e9d83a-16ac-11e5-943f-884e70686989.gif)
+![screenshot 2015-06-19 17 57 24](https://cloud.githubusercontent.com/assets/126868/8263826/ad755d58-16ac-11e5-966e-f7a9be97ff28.png)
 
 ## Installation
-Inlcude mapbox-map-matching.js after [Mapbox.js](https://github.com/mapbox/mapbox.js) in your html. Download the js files from the `dist` directory..
+Inlcude mapbox-map-matching.js after [Mapbox.js](https://github.com/mapbox/mapbox.js) in your html. Download the js files from the `dist` directory.
 
 <!--
 Or use the version on the [Mapbox Plugins CDN](http://mapbox.com/mapbox.js/plugins/#mapbox-mapmatch):
@@ -43,7 +44,7 @@ Given a geojson object, returns a leaflet feature layer with the matched geometr
  - :`foot` for matching to pedestrian streets and footpaths
 - `mapmatchAPI` : Custom API endpoint for mapmatching
 - `gpsPrecision` : Integer indicating the precision of the input geometries in metres (default=5)
-- `return` type of object to return after matching
+- `output` type of object to return after matching
  - :`layer` (default) returns a leaflet featureLayer
  - :`geojson` returns a geojson feature collection
 
