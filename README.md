@@ -2,11 +2,11 @@
 
 # mapbox-map-matching.js
 
-Have your gps tracks and geojson data perfectly align with OpenStreetMap streets using this [Mapbox.js](https://github.com/mapbox/mapbox.js) plugin by querying the [Mapbox Map Matching API]().
+[Mapbox.js](https://github.com/mapbox/mapbox.js) plugin to match GeoJSON geometries to the OpenStreetMap streets network using the [Mapbox Map Matching API](https://www.mapbox.com/developers/api/map-matching).
 
-Sample GPS tracks(cyan) matched using a car and foot profile(dashed).
-![untitled](https://cloud.githubusercontent.com/assets/126868/8263771/04e9d83a-16ac-11e5-943f-884e70686989.gif)
 ![screenshot 2015-06-19 17 57 24](https://cloud.githubusercontent.com/assets/126868/8263826/ad755d58-16ac-11e5-966e-f7a9be97ff28.png)
+
+_A GPS track (cyan) matched to the streets via a profile for cars (solid red line) and for pedestrians (dotted red line)._
 
 ## Installation
 Inlcude mapbox-map-matching.js after [Mapbox.js](https://github.com/mapbox/mapbox.js) in your html. Download the js files from the `dist` directory.
@@ -67,5 +67,5 @@ to parse formats.
 ##Algorithm
 1. Read an input geojson FeatureCollection
 2. Tidy the geojson using [geojson-tidy](https://github.com/mapbox/geojson-tidy)
-3. Match every feature using the [Mapbox map-matching API]()
+3. Match every feature using the [Mapbox Map Matching API](https://www.mapbox.com/developers/api/map-matching)
 4. Return a leaflet [featureLayer](https://www.mapbox.com/mapbox.js/api/v2.1.9/l-mapbox-featurelayer/) with the matched features or just a geojson object
