@@ -35,7 +35,7 @@
         var map = L.mapbox.map('map', 'mapbox.streets');
         var featureLayer = L.mapbox.featureLayer().addTo(map);
 
-        var url = 'https://raw.githubusercontent.com/mapbox/mapbox-mapmatch/master/test/a.geojson';
+        var url = 'https://raw.githubusercontent.com/mapbox/mapbox-match.js/master/test/a.geojson';
 
         function load() {
             // Fetch just the contents of a .geojson file from GitHub
@@ -52,7 +52,11 @@
                 success: function (geojson) {
 
                     // Mapmatch the geojson with default options
-                    L.mapbox.mapmatching(geojson, function (error, layer) {
+                    L.mapbox.mapmatching(geojson, {
+                        profile: "driving"
+                    },function (err, layer) {
+                        if (err) { return console.error(err); }
+
                         layer.addTo(map).bringToBack();
                         layer.setStyle({
                             color: '#9a0202',
@@ -61,10 +65,12 @@
                         });
                     });
 
-                    // Try foot profile matching
+                    // Try walking profile matching
                     L.mapbox.mapmatching(geojson, {
-                        profile: "foot"
-                    }, function (error, layer) {
+                        profile: "walking"
+                    }, function (err, layer) {
+                        if (err) { return console.error(err); }
+
                         layer.addTo(map);
                         layer.setStyle({
                             color: '#ff0000',
@@ -87,7 +93,9 @@
                     L.mapbox.mapmatching(geojson, {
                         profile: "walking",
                         output: "geojson"
-                    }, function (error, geojson) {
+                    }, function (err, geojson) {
+                        if (err) { return console.error(err); }
+
                         for (var i = 0; i < geojson.features.length; i++) {
                             if (geojson.features[i].properties.confidence > 0.8) {
                                 var layer = L.mapbox.featureLayer(geojson.features[i]).addTo(map);

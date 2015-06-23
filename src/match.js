@@ -5,16 +5,28 @@ var xhr = require('xhr'),
     polyline = require('polyline'),
     queue = require('queue-async');
 
-function match(geojson, options, callback) {
 
+var VALID_PROFILES = [
+    'driving',
+    'walking',
+    'cycling'
+];
+
+function match(geojson, options, callback) {
     options = options || {};
 
-    // Configure mapmatching API and create an empty queue for storing the responses
-    var mapmatchAPI = options.mapmatchAPI || "https://api-directions-johan-matching.tilestream.net/matching/v4/mapbox.driving.json";
-    if (options.profile == "walking") {
-        mapmatchAPI = "https://api-directions-johan-walk-match.tilestream.net/matching/v4/mapbox.driving.json";
+    // Configure mapmatching API endpoint
+    var mapMatchAPI;
+    if (options.mapMatchAPI) {
+        mapMatchAPI = options.mapMatchAPI;
+    } else if (VALID_PROFILES.indexOf(options.profile) >= 0) {
+        mapMatchAPI = "https://api.tiles.mapbox.com/matching/v4/mapbox." + options.profile + ".json";
+    } else {
+        callback(new Error("Need either mapmatchAPI endpoint or profile of " + VALID_PROFILES.join(", ")));
     }
-    var xhrUrl = mapmatchAPI + "?access_token=" + L.mapbox.accessToken + "&geometry=polyline";
+    var xhrUrl = mapMatchAPI + "?access_token=" + L.mapbox.accessToken + "&geometry=polyline";
+
+    // empty queue for storing responses
     var q = queue();
 
     function matchFeature(feature, cb) {
@@ -71,7 +83,7 @@ function match(geojson, options, callback) {
         for (var i = 1; i < results.length; i++) {
             mergedResults.features.push(results[i].features[0]);
         }
-        
+
         // Return the features or leaflet layer        
         if (options.output == "geojson") {
             callback(error, mergedResults);
@@ -85,7 +97,7 @@ function match(geojson, options, callback) {
 }
 
 module.exports = function (feature, options, callback) {
-    if( !callback){
+    if (!callback) {
         callback = options;
         options = {};
     }
