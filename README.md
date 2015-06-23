@@ -34,19 +34,18 @@ L.mapbox.mapmatching(geojson, options, function (error, layer) {
 
 ## API
 
-### `L.mapbox.mapmatching(geojson, options?, callback)`
+### `L.mapbox.mapmatching(geojson, options, callback)`
 
 Given a geojson object, returns a leaflet feature layer with the matched geometries. Since an asynchronous request is made for matching, you need to specify a callback function that runs when there is a successful response.
 
-### options
-- `profile` to be used for mapmatching
- - :`car` (default) for matching to motorable roads
- - :`foot` for matching to pedestrian streets and footpaths
-- `mapmatchAPI` : Custom API endpoint for mapmatching
-- `gpsPrecision` : Integer indicating the precision of the input geometries in metres (default=5)
-- `return` type of object to return after matching
- - :`layer` (default) returns a leaflet featureLayer
- - :`geojson` returns a geojson feature collection
+### Options
+
+name | required? | description
+---- | --------- | -----------
+`profile` | required | Profile to match trace against. Options are `driving`, `walking` and `cycling`
+`mapMatchAPI` | optional | Custom API endpoint to query. Overrides the `profile` option`
+`gpsPrecision` | optional | Integer indicating the precision of the input geometries in metres (default: 5)
+`return` | optional | Type of object to return after matching. Options are `layer` (default) returns a leaflet featureLayer, `geojson` returns a geojson feature collection
 
 ## Development
 
