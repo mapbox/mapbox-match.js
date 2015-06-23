@@ -11,7 +11,7 @@ function match(geojson, options, callback) {
 
     // Configure mapmatching API and create an empty queue for storing the responses
     var mapmatchAPI = options.mapmatchAPI || "https://api-directions-johan-matching.tilestream.net/matching/v4/mapbox.driving.json";
-    if (options.profile == "foot") {
+    if (options.profile == "walking") {
         mapmatchAPI = "https://api-directions-johan-walk-match.tilestream.net/matching/v4/mapbox.driving.json";
     }
     var xhrUrl = mapmatchAPI + "?access_token=" + L.mapbox.accessToken + "&geometry=polyline";

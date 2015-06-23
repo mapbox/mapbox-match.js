@@ -40,8 +40,9 @@ Given a geojson object, returns a leaflet feature layer with the matched geometr
 
 ### options
 - `profile` to be used for mapmatching
- - :`car` (default) for matching to motorable roads
- - :`foot` for matching to pedestrian streets and footpaths
+ - :`driving` (default) for matching to motorable roads
+ - :`cycling` for matching to bikable streets and paths
+ - :`walking` for matching to pedestrian streets and footpaths
 - `mapmatchAPI` : Custom API endpoint for mapmatching
 - `gpsPrecision` : Integer indicating the precision of the input geometries in metres (default=5)
 - `output` type of object to return after matching
