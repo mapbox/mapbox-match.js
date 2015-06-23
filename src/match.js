@@ -5,13 +5,14 @@ var xhr = require('xhr'),
     polyline = require('polyline'),
     queue = require('queue-async');
 
+
 var VALID_PROFILES = [
     'driving',
     'walking',
     'cycling'
 ];
 
-function mapmatch(geojson, options, callback) {
+function match(geojson, options, callback) {
     options = options || {};
 
     // Configure mapmatching API endpoint
@@ -82,7 +83,7 @@ function mapmatch(geojson, options, callback) {
         for (var i = 1; i < results.length; i++) {
             mergedResults.features.push(results[i].features[0]);
         }
-        
+
         // Return the features or leaflet layer        
         if (options.output == "geojson") {
             callback(error, mergedResults);
@@ -96,9 +97,9 @@ function mapmatch(geojson, options, callback) {
 }
 
 module.exports = function (feature, options, callback) {
-    if( !callback){
+    if (!callback) {
         callback = options;
         options = {};
     }
-    return new mapmatch(feature, options, callback);
+    return new match(feature, options, callback);
 };

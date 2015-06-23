@@ -1,15 +1,15 @@
 {
-  "name": "mapbox-map-matching.js",
+  "name": "mapbox-match.js",
   "description": "A plugin to align geometries to OpenStreetMap data via the Mapbox Map Matching API",
   "main": "index.js",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "scripts": {
     "test": "zuul --local -- test/test.js",
-    "build": "mkdir -p dist && browserify -s mapmatching index.js > dist/mapbox.map-matching.js && uglifyjs dist/mapbox.map-matching.js -c -m > dist/mapbox.map-matching.min.js"
+    "build": "mkdir -p dist && browserify -s mapmatching index.js > dist/mapbox.match.js && uglifyjs dist/mapbox.match.js -c -m > dist/mapbox.match.min.js"
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:mapbox/mapbox-map-matching.js.git"
+    "url": "git@github.com:mapbox/mapbox-match.js.git"
   },
   "browserify": {
     "transform": [
@@ -28,9 +28,9 @@
   "author": "Arun Ganesh",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/mapbox/mapbox-map-matching.js/issues"
+    "url": "https://github.com/mapbox/mapbox-match.js/issues"
   },
-  "homepage": "https://github.com/mapbox/mapbox-map-matching.js",
+  "homepage": "https://github.com/mapbox/mapbox-match.js",
   "devDependencies": {
     "tape": "2.4.2",
     "uglify-js": "2.4.16",

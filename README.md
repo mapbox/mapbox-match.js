@@ -1,6 +1,6 @@
-[![Build Status](https://travis-ci.org/mapbox/mapbox-map-matching.js.svg)](https://travis-ci.org/mapbox/mapbox/mapbox-map-matching.js)
+[![Build Status](https://travis-ci.org/mapbox/mapbox-match.js.svg)](https://travis-ci.org/mapbox/mapbox/mapbox-match.js)
 
-# mapbox-map-matching.js
+# mapbox-match.js
 
 [Mapbox.js](https://github.com/mapbox/mapbox.js) plugin to match GeoJSON geometries to the OpenStreetMap streets network using the [Mapbox Map Matching API](https://www.mapbox.com/developers/api/map-matching).
 
@@ -9,13 +9,13 @@
 _A GPS track (cyan) matched to the streets via a profile for cars (solid red line) and for pedestrians (dotted red line)._
 
 ## Installation
-Inlcude mapbox-map-matching.js after [Mapbox.js](https://github.com/mapbox/mapbox.js) in your html. Download the js files from the `dist` directory..
+Inlcude mapbox-match.js after [Mapbox.js](https://github.com/mapbox/mapbox.js) in your html. Download the js files from the `dist` directory.
 
 <!--
 Or use the version on the [Mapbox Plugins CDN](http://mapbox.com/mapbox.js/plugins/#mapbox-mapmatch):
 
 ```html
-<script src='//api.tiles.mapbox.com/mapbox.js/plugins/mapbox.map-matching.js/v0.0.0/mapbox.map-matching.min.js'></script>
+<script src='//api.tiles.mapbox.com/mapbox.js/plugins/mapbox.match.js/v0.0.0/mapbox.match.min.js'></script>
 ```
 -->
 
@@ -52,13 +52,13 @@ name | required? | description
 This is a [browserify](http://browserify.org/) project:
 
 ```sh
-git clone git@github.com:mapbox/mapbox-map-matching.js.git
-cd mapbox-map-matching.js
+git clone git@github.com:mapbox/mapbox-match.js.git
+cd mapbox-match.js
 npm install
 npm run build
 ```
 
-`mapbox-map-matching.js` and `mapbox-map-matching.min.js` are **built files** generated
+`mapbox-match.js` and `mapbox-match.min.js` are **built files** generated
 from `index.js` by `browserify`. If you find an issue, it either needs to be
 fixed in `index.js`, or in one of the libraries mapbox-mapmatch uses
 to parse formats.
@@ -66,5 +66,5 @@ to parse formats.
 ##Algorithm
 1. Read an input geojson FeatureCollection
 2. Tidy the geojson using [geojson-tidy](https://github.com/mapbox/geojson-tidy)
-3. Match every feature using the [Mapbox map-matching API]()
+3. Match every feature using the [Mapbox Map Matching API](https://www.mapbox.com/developers/api/map-matching)
 4. Return a leaflet [featureLayer](https://www.mapbox.com/mapbox.js/api/v2.1.9/l-mapbox-featurelayer/) with the matched features or just a geojson object
