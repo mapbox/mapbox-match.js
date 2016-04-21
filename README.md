@@ -9,7 +9,7 @@
 _A GPS track (cyan) matched to the streets via a profile for cars (solid red line) and for pedestrians (dotted red line)._
 
 ## Installation
-Inlcude mapbox-match.js after [Mapbox.js](https://github.com/mapbox/mapbox.js) in your html. Download the js files from the `dist` directory.
+Include mapbox-match.js after [Mapbox.js](https://github.com/mapbox/mapbox.js) in your html. Download the js files from the `dist` directory.
 
 <!--
 Or use the version on the [Mapbox Plugins CDN](http://mapbox.com/mapbox.js/plugins/#mapbox-mapmatch):
