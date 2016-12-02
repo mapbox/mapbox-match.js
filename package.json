@@ -1,5 +1,5 @@
 {
-  "name": "mapbox-match.js",
+  "name": "@mapbox/mapbox-match.js",
   "description": "A plugin to align geometries to OpenStreetMap data via the Mapbox Map Matching API",
   "main": "index.js",
   "version": "0.0.1",
