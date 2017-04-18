@@ -45,7 +45,7 @@ name | required? | description
 `profile` | required | Profile to match trace against. Options are `driving`, `walking` and `cycling`
 `mapMatchAPI` | optional | Custom API endpoint to query. Overrides the `profile` option`
 `gpsPrecision` | optional | Integer indicating the precision of the input geometries in metres (default: 5)
-`return` | optional | Type of object to return after matching. Options are `layer` (default) returns a leaflet featureLayer, `geojson` returns a geojson feature collection
+`output` | optional | Type of object to return after matching. Options are `layer` (default) returns a leaflet featureLayer, `geojson` returns a geojson feature collection
 
 ## Development
 
