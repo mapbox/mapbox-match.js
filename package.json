@@ -2,7 +2,7 @@
   "name": "@mapbox/mapbox-match.js",
   "description": "A plugin to align geometries to OpenStreetMap data via the Mapbox Map Matching API",
   "main": "index.js",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "scripts": {
     "test": "zuul --local -- test/test.js",
     "build": "mkdir -p dist && browserify -s mapmatching index.js > dist/mapbox.match.js && uglifyjs dist/mapbox.match.js -c -m > dist/mapbox.match.min.js"
@@ -44,5 +44,8 @@
     "polyline": "0.0.3",
     "queue-async": "^1.0.7",
     "xhr": "^2.0.2"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
