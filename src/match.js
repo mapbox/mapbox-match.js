@@ -5,7 +5,6 @@ var xhr = require('xhr'),
     polyline = require('polyline'),
     queue = require('queue-async');
 
-
 var VALID_PROFILES = [
     'driving',
     'walking',
@@ -25,6 +24,10 @@ function match(geojson, options, callback) {
         callback(new Error("Need either mapmatchAPI endpoint or profile of " + VALID_PROFILES.join(", ")));
     }
     var xhrUrl = mapMatchAPI + "?access_token=" + L.mapbox.accessToken + "&geometry=polyline";
+
+    if (options.gpsPrecision) {
+        xhrUrl += "&gps_precision=" + options.gpsPrecision;
+    }
 
     // empty queue for storing responses
     var q = queue();
@@ -66,7 +69,7 @@ function match(geojson, options, callback) {
     // First tidy the input geojson to remove noisy points and match every feature using the API
 
     var inputGeometries = tidy.tidy(geojson, {
-        "minimumDistance": options.gpsPrecision || 10,
+        "minimumDistance": options.minimumDistance || 10,
         "minimumTime": 5,
         "maximumPoints": 100
     });
